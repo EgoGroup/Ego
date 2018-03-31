@@ -1,0 +1,142 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    background: #ededed;
+    overflow: hidden;
+    width: 100%;
+}
+
+.banner {
+    perspective: 3000px;
+    position: relative;
+    z-index: 19;
+}
+
+.bg {
+    position: relative;
+
+    width: 1220px;
+    height: 478px;
+    margin: 20px auto;
+    background-size: 100% 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: url(http://static.smartisanos.cn/index/img/store/home/banner-3d-item-1-box-1_61bdc2f4f9.png) 50% no-repeat;
+}
+
+.imga {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 5px;
+    left: 0;
+    background-color: black;
+    background: url(http://static.smartisanos.cn/index/img/store/home/banner-3d-item-1-box-3_8fa7866d59.png) 50% no-repeat;
+    background-size: 95% 100%;
+    box-sizing: border-box;
+}
+
+.textb {
+    position: absolute;
+    right: 10%;
+    color: #ffffff;
+    text-align: right;
+    font-weight: lighter;
+    top: 20%;
+    font-size: 30px;
+}
+
+.copyright {
+    bottom: 10%;
+    font-size: 10px;
+    right: 10%;
+    color: #ffffff;
+    text-align: right;
+    font-weight: lighter;
+}
+
+.gray-box {
+    margin-bottom: 30px;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+}
+
+.gray-box-title {
+    z-index: 10;
+    height: 60px;
+    padding: 0 10px 0 24px;
+    border-bottom: 1px solid #d4d4d4;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 1px 7px rgba(0, 0, 0, 06);
+    background: linear-gradient(#fbfbfb, #ececec);
+    line-height: 60px;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.gray-box-title h2 {
+    font-size: 18px;
+    font-weight: 400;
+    color: #262626;
+    display: inline-block;
+    line-height: 60px;
+}
+
+.good-item {
+    -webkit-box-flex: 1;
+    flex: 1;
+    width: 50%;
+    background: #ffffff;
+    transition-property: all;
+    transition-duration: 0.5s;
+    transition-timing-function: initial;
+    font-size: 15px;
+    transition-delay: initial;
+    height: 430px;
+    float: left;
+}
+
+.a {
+    font-style: normal;
+    text-decoration: none;
+    color: #5079d9;
+    cursor: pointer;
+    transition-property: all;
+    transition-duration: 0.5s;
+    transition-timing-function: initial;
+    transition-delay: initial;
+}
+
+.good-item-img {
+    margin: 50px auto 10px 200px;
+    width: 206px;
+    height: 206px;
+    color: #5079d9;
+}
+
+.h6 {
+    line-height: 1.2;
+    font-size: 16px;
+    color: #424242;
+    margin: 0 auto;
+    padding: 0 14px;
+    text-align: center;
+    overflow: hidden;
+    font-weight: 400;
+}
+
+.h3 {
+    text-align: center;
+    line-height: 1.2;
+    font-size: 12px;
+    color: #d0d0d0;
+    padding: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 400;
+}

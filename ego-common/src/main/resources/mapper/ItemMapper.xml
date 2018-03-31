@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yoke.ego.common.mapper.ItemMapper">
+  <resultMap id="BaseResultMap" type="com.yoke.ego.common.pojo.Item">
+    <constructor>
+      <idArg column="item_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="item_status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="item_created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="item_updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="item_memo" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="item_title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="item_image" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="item_category_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="item_sell_num" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="item_isbag" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="item_sell_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    item_id, item_status, item_created, item_updated, item_memo, item_title, item_image, 
+    item_category_id, item_sell_num, item_isbag, item_sell_id
+  </sql>
+  <select id="selectByExample" parameterType="com.yoke.ego.common.pojo.ItemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ego_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ego_item
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ego_item
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yoke.ego.common.pojo.ItemExample">
+    delete from ego_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yoke.ego.common.pojo.Item">
+    <selectKey keyProperty="itemId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ego_item (item_status, item_created, item_updated, 
+      item_memo, item_title, item_image, 
+      item_category_id, item_sell_num, item_isbag, 
+      item_sell_id)
+    values (#{itemStatus,jdbcType=TINYINT}, #{itemCreated,jdbcType=TIMESTAMP}, #{itemUpdated,jdbcType=TIMESTAMP}, 
+      #{itemMemo,jdbcType=VARCHAR}, #{itemTitle,jdbcType=VARCHAR}, #{itemImage,jdbcType=VARCHAR}, 
+      #{itemCategoryId,jdbcType=BIGINT}, #{itemSellNum,jdbcType=BIGINT}, #{itemIsbag,jdbcType=TINYINT}, 
+      #{itemSellId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yoke.ego.common.pojo.Item">
+    <selectKey keyProperty="itemId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ego_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemStatus != null">
+        item_status,
+      </if>
+      <if test="itemCreated != null">
+        item_created,
+      </if>
+      <if test="itemUpdated != null">
+        item_updated,
+      </if>
+      <if test="itemMemo != null">
+        item_memo,
+      </if>
+      <if test="itemTitle != null">
+        item_title,
+      </if>
+      <if test="itemImage != null">
+        item_image,
+      </if>
+      <if test="itemCategoryId != null">
+        item_category_id,
+      </if>
+      <if test="itemSellNum != null">
+        item_sell_num,
+      </if>
+      <if test="itemIsbag != null">
+        item_isbag,
+      </if>
+      <if test="itemSellId != null">
+        item_sell_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemStatus != null">
+        #{itemStatus,jdbcType=TINYINT},
+      </if>
+      <if test="itemCreated != null">
+        #{itemCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemUpdated != null">
+        #{itemUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemMemo != null">
+        #{itemMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemTitle != null">
+        #{itemTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="itemImage != null">
+        #{itemImage,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCategoryId != null">
+        #{itemCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="itemSellNum != null">
+        #{itemSellNum,jdbcType=BIGINT},
+      </if>
+      <if test="itemIsbag != null">
+        #{itemIsbag,jdbcType=TINYINT},
+      </if>
+      <if test="itemSellId != null">
+        #{itemSellId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yoke.ego.common.pojo.ItemExample" resultType="java.lang.Long">
+    select count(*) from ego_item
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ego_item
+    <set>
+      <if test="record.itemId != null">
+        item_id = #{record.itemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemStatus != null">
+        item_status = #{record.itemStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.itemCreated != null">
+        item_created = #{record.itemCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemUpdated != null">
+        item_updated = #{record.itemUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemMemo != null">
+        item_memo = #{record.itemMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemTitle != null">
+        item_title = #{record.itemTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemImage != null">
+        item_image = #{record.itemImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemCategoryId != null">
+        item_category_id = #{record.itemCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemSellNum != null">
+        item_sell_num = #{record.itemSellNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemIsbag != null">
+        item_isbag = #{record.itemIsbag,jdbcType=TINYINT},
+      </if>
+      <if test="record.itemSellId != null">
+        item_sell_id = #{record.itemSellId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ego_item
+    set item_id = #{record.itemId,jdbcType=BIGINT},
+      item_status = #{record.itemStatus,jdbcType=TINYINT},
+      item_created = #{record.itemCreated,jdbcType=TIMESTAMP},
+      item_updated = #{record.itemUpdated,jdbcType=TIMESTAMP},
+      item_memo = #{record.itemMemo,jdbcType=VARCHAR},
+      item_title = #{record.itemTitle,jdbcType=VARCHAR},
+      item_image = #{record.itemImage,jdbcType=VARCHAR},
+      item_category_id = #{record.itemCategoryId,jdbcType=BIGINT},
+      item_sell_num = #{record.itemSellNum,jdbcType=BIGINT},
+      item_isbag = #{record.itemIsbag,jdbcType=TINYINT},
+      item_sell_id = #{record.itemSellId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yoke.ego.common.pojo.Item">
+    update ego_item
+    <set>
+      <if test="itemStatus != null">
+        item_status = #{itemStatus,jdbcType=TINYINT},
+      </if>
+      <if test="itemCreated != null">
+        item_created = #{itemCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemUpdated != null">
+        item_updated = #{itemUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemMemo != null">
+        item_memo = #{itemMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemTitle != null">
+        item_title = #{itemTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="itemImage != null">
+        item_image = #{itemImage,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCategoryId != null">
+        item_category_id = #{itemCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="itemSellNum != null">
+        item_sell_num = #{itemSellNum,jdbcType=BIGINT},
+      </if>
+      <if test="itemIsbag != null">
+        item_isbag = #{itemIsbag,jdbcType=TINYINT},
+      </if>
+      <if test="itemSellId != null">
+        item_sell_id = #{itemSellId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yoke.ego.common.pojo.Item">
+    update ego_item
+    set item_status = #{itemStatus,jdbcType=TINYINT},
+      item_created = #{itemCreated,jdbcType=TIMESTAMP},
+      item_updated = #{itemUpdated,jdbcType=TIMESTAMP},
+      item_memo = #{itemMemo,jdbcType=VARCHAR},
+      item_title = #{itemTitle,jdbcType=VARCHAR},
+      item_image = #{itemImage,jdbcType=VARCHAR},
+      item_category_id = #{itemCategoryId,jdbcType=BIGINT},
+      item_sell_num = #{itemSellNum,jdbcType=BIGINT},
+      item_isbag = #{itemIsbag,jdbcType=TINYINT},
+      item_sell_id = #{itemSellId,jdbcType=BIGINT}
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </update>
+</mapper>

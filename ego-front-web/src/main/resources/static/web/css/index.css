@@ -1,0 +1,138 @@
+.login-form-container {
+    /*padding-left: 30%;*/
+    margin-left: 15%;
+    /*margin-top: 50px;*/
+    width: 650px;
+    float: left;
+    height: 450px;
+    /*background-color: #2aabd2;*/
+}
+
+.login-image-container {
+    /*margin-top: 50px;*/
+    width: 688px;
+    /*height: 480px;*/
+    /*margin: auto;*/
+    /*background-color: #FF5000;*/
+    /*margin-left: 920px;*/
+    /*text-align: center;*/
+}
+
+.text {
+    width: 33%;
+    height: 100%;
+    /*border: 2px solid*/
+}
+
+.text-sub {
+    max-width: 350px;
+    margin: auto;
+    color: #767c84;
+    text-align: center;
+}
+
+.text-sub-a {
+    color: #00aeee;
+    /*text-decoration: underline;*/
+    outline: 0;
+    font-size: 1em;
+    line-height: 1.9em;
+}
+
+.navbar-header-left {
+    float: left;
+    padding: 10px 10px 10px 100px;
+    color: #3c4858;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1.5em;
+}
+
+.navbar-header-right {
+    margin-right: 0;
+    color: #3c4858;
+    float: right;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1.5em;
+}
+
+.navbar-header-right li {
+    padding: 0 10px;
+    float: left;
+    position: relative;
+    display: block;
+    color: #3c4858;
+}
+
+.navbar-header-right a {
+    font-size: 25px;
+    /*color: #49505b;*/
+    font-weight: 400;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.img {
+    width: 225px;
+    height: 225px;
+}
+
+.input-text {
+    padding: 0 40px 0 20px;
+    width: 160px;
+    height: 38px;
+    font-size: 14px;
+    border: 1px solid #eeeeee;
+    border-radius: 40px;
+    background-color: #eeeeee;
+    text-rendering: auto;
+}
+
+.input-text-search-btn {
+    position: absolute;
+    top: 4px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    line-height: normal;
+    text-align: center;
+    color: #969696;
+    cursor: pointer;
+}
+
+.ic-search {
+    margin: 5px -1px 0 0;
+    display: block;
+    font-weight: 400;
+    text-align: center;
+    content: "\E618";
+    color: #969696;
+}
+
+.footer {
+    min-height: 70px;
+    padding-top: 25px;
+    height: 70px;
+}
+
+.footer p {
+    color: #495060;
+    font-size: 1em;
+    text-align: center;
+    margin: 0 0 10px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E站登陆</title>
+    <link rel="icon" href="/web/img/head.ico">
+    <link rel="stylesheet" href="css/login.css"/>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css"/>
+    <script src="/bootstrap/js/jquery.min.js"></script>
+</head>
+<body class="center-container">
+<!--header-->
+<div class="header-system">
+    <h1 class="header-system">E站登陆</h1>
+</div>
+<!--//header-->
+<div class="main-content-agile">
+    <div class="sub-main">
+        <div class="wthree-pro">
+            <h2 class="wthree-pro">Login Here</h2>
+        </div>
+        <form id="login" method="post" width="100%">
+            <input class="sub-main" type="text" required placeholder="用户名" name="username" id="username"/>
+            <span style="color: #00aeee;" class="glyphicon glyphicon-user" aria-hidden="true">
+            </span>
+            <br/><br/>
+            <input class="sub-main" placeholder="密码" name="password" id="password" type="password" required/>
+            <span style="color: #00aeee;" class="glyphicon glyphicon-lock" aria-hidden="true">
+            </span>
+            <br/><br/>
+            <div class="sub-w3">
+                <h6 style="cursor: pointer;">
+                    <a>还没有账号，点此注册</a>
+                </h6>
+                <div style="margin-top: 3em;">
+                    <input class="sub-main" id="loginBtn" type="button" value="登录"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--//body-->
+<div class="footer">
+    <p>© 2017 ESite. All rights reserved | Design by ESite</p>
+</div>
+<script>
+    $.fn.serializeObject = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+
+    $("#loginBtn").click(function () {
+        formData = $("#login").serializeObject();
+        $.ajax({
+            type: "POST",
+            url: "/user/login",
+            data: JSON.stringify(formData),
+            async: false,
+            contentType: "application/json",
+            dataType: "json",
+            success: function (resp) {
+                if (resp.code === 1) {
+                    window.location.href = "/"
+                } else {
+                    alert(resp.data);
+                }
+            },
+            error: function (resp) {
+                alert("请重试");
+            }
+        })
+    });
+</script>
+</body>
+</html>

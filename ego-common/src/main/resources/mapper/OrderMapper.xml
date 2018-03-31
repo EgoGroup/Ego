@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yoke.ego.common.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.yoke.ego.common.pojo.Order">
+    <constructor>
+      <idArg column="order_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="order_memo" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="order_status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="order_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="order_post_fee" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="order_unit_price" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="order_payment" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="order_consign_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="order_updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="order_created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="order_payment_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="order_shopping_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="order_byer_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="order_shopping_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="order_buyer_rate" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="order_user_store_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="order_receipt" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="order_user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="order_buy_message" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="order_user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    order_id, order_memo, order_status, order_count, order_post_fee, order_unit_price, 
+    order_payment, order_consign_time, order_updated, order_created, order_payment_type, 
+    order_shopping_name, order_byer_id, order_shopping_code, order_buyer_rate, order_user_store_name, 
+    order_receipt, order_user_name, order_buy_message, order_user_id
+  </sql>
+  <select id="selectByExample" parameterType="com.yoke.ego.common.pojo.OrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ego_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ego_order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ego_order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yoke.ego.common.pojo.OrderExample">
+    delete from ego_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yoke.ego.common.pojo.Order">
+    <selectKey keyProperty="orderId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ego_order (order_memo, order_status, order_count, 
+      order_post_fee, order_unit_price, order_payment, 
+      order_consign_time, order_updated, order_created, 
+      order_payment_type, order_shopping_name, order_byer_id, 
+      order_shopping_code, order_buyer_rate, order_user_store_name, 
+      order_receipt, order_user_name, order_buy_message, 
+      order_user_id)
+    values (#{orderMemo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=TINYINT}, #{orderCount,jdbcType=INTEGER}, 
+      #{orderPostFee,jdbcType=REAL}, #{orderUnitPrice,jdbcType=REAL}, #{orderPayment,jdbcType=REAL}, 
+      #{orderConsignTime,jdbcType=TIMESTAMP}, #{orderUpdated,jdbcType=TIMESTAMP}, #{orderCreated,jdbcType=TIMESTAMP}, 
+      #{orderPaymentType,jdbcType=INTEGER}, #{orderShoppingName,jdbcType=VARCHAR}, #{orderByerId,jdbcType=BIGINT}, 
+      #{orderShoppingCode,jdbcType=VARCHAR}, #{orderBuyerRate,jdbcType=TINYINT}, #{orderUserStoreName,jdbcType=VARCHAR}, 
+      #{orderReceipt,jdbcType=TIMESTAMP}, #{orderUserName,jdbcType=VARCHAR}, #{orderBuyMessage,jdbcType=VARCHAR}, 
+      #{orderUserId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yoke.ego.common.pojo.Order">
+    <selectKey keyProperty="orderId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ego_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderMemo != null">
+        order_memo,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="orderCount != null">
+        order_count,
+      </if>
+      <if test="orderPostFee != null">
+        order_post_fee,
+      </if>
+      <if test="orderUnitPrice != null">
+        order_unit_price,
+      </if>
+      <if test="orderPayment != null">
+        order_payment,
+      </if>
+      <if test="orderConsignTime != null">
+        order_consign_time,
+      </if>
+      <if test="orderUpdated != null">
+        order_updated,
+      </if>
+      <if test="orderCreated != null">
+        order_created,
+      </if>
+      <if test="orderPaymentType != null">
+        order_payment_type,
+      </if>
+      <if test="orderShoppingName != null">
+        order_shopping_name,
+      </if>
+      <if test="orderByerId != null">
+        order_byer_id,
+      </if>
+      <if test="orderShoppingCode != null">
+        order_shopping_code,
+      </if>
+      <if test="orderBuyerRate != null">
+        order_buyer_rate,
+      </if>
+      <if test="orderUserStoreName != null">
+        order_user_store_name,
+      </if>
+      <if test="orderReceipt != null">
+        order_receipt,
+      </if>
+      <if test="orderUserName != null">
+        order_user_name,
+      </if>
+      <if test="orderBuyMessage != null">
+        order_buy_message,
+      </if>
+      <if test="orderUserId != null">
+        order_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderMemo != null">
+        #{orderMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="orderCount != null">
+        #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderPostFee != null">
+        #{orderPostFee,jdbcType=REAL},
+      </if>
+      <if test="orderUnitPrice != null">
+        #{orderUnitPrice,jdbcType=REAL},
+      </if>
+      <if test="orderPayment != null">
+        #{orderPayment,jdbcType=REAL},
+      </if>
+      <if test="orderConsignTime != null">
+        #{orderConsignTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdated != null">
+        #{orderUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderCreated != null">
+        #{orderCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderPaymentType != null">
+        #{orderPaymentType,jdbcType=INTEGER},
+      </if>
+      <if test="orderShoppingName != null">
+        #{orderShoppingName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderByerId != null">
+        #{orderByerId,jdbcType=BIGINT},
+      </if>
+      <if test="orderShoppingCode != null">
+        #{orderShoppingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderBuyerRate != null">
+        #{orderBuyerRate,jdbcType=TINYINT},
+      </if>
+      <if test="orderUserStoreName != null">
+        #{orderUserStoreName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderReceipt != null">
+        #{orderReceipt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUserName != null">
+        #{orderUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderBuyMessage != null">
+        #{orderBuyMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="orderUserId != null">
+        #{orderUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yoke.ego.common.pojo.OrderExample" resultType="java.lang.Long">
+    select count(*) from ego_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ego_order
+    <set>
+      <if test="record.orderId != null">
+        order_id = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderMemo != null">
+        order_memo = #{record.orderMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderStatus != null">
+        order_status = #{record.orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.orderCount != null">
+        order_count = #{record.orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderPostFee != null">
+        order_post_fee = #{record.orderPostFee,jdbcType=REAL},
+      </if>
+      <if test="record.orderUnitPrice != null">
+        order_unit_price = #{record.orderUnitPrice,jdbcType=REAL},
+      </if>
+      <if test="record.orderPayment != null">
+        order_payment = #{record.orderPayment,jdbcType=REAL},
+      </if>
+      <if test="record.orderConsignTime != null">
+        order_consign_time = #{record.orderConsignTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderUpdated != null">
+        order_updated = #{record.orderUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderCreated != null">
+        order_created = #{record.orderCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderPaymentType != null">
+        order_payment_type = #{record.orderPaymentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderShoppingName != null">
+        order_shopping_name = #{record.orderShoppingName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderByerId != null">
+        order_byer_id = #{record.orderByerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderShoppingCode != null">
+        order_shopping_code = #{record.orderShoppingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderBuyerRate != null">
+        order_buyer_rate = #{record.orderBuyerRate,jdbcType=TINYINT},
+      </if>
+      <if test="record.orderUserStoreName != null">
+        order_user_store_name = #{record.orderUserStoreName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderReceipt != null">
+        order_receipt = #{record.orderReceipt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderUserName != null">
+        order_user_name = #{record.orderUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderBuyMessage != null">
+        order_buy_message = #{record.orderBuyMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderUserId != null">
+        order_user_id = #{record.orderUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ego_order
+    set order_id = #{record.orderId,jdbcType=BIGINT},
+      order_memo = #{record.orderMemo,jdbcType=VARCHAR},
+      order_status = #{record.orderStatus,jdbcType=TINYINT},
+      order_count = #{record.orderCount,jdbcType=INTEGER},
+      order_post_fee = #{record.orderPostFee,jdbcType=REAL},
+      order_unit_price = #{record.orderUnitPrice,jdbcType=REAL},
+      order_payment = #{record.orderPayment,jdbcType=REAL},
+      order_consign_time = #{record.orderConsignTime,jdbcType=TIMESTAMP},
+      order_updated = #{record.orderUpdated,jdbcType=TIMESTAMP},
+      order_created = #{record.orderCreated,jdbcType=TIMESTAMP},
+      order_payment_type = #{record.orderPaymentType,jdbcType=INTEGER},
+      order_shopping_name = #{record.orderShoppingName,jdbcType=VARCHAR},
+      order_byer_id = #{record.orderByerId,jdbcType=BIGINT},
+      order_shopping_code = #{record.orderShoppingCode,jdbcType=VARCHAR},
+      order_buyer_rate = #{record.orderBuyerRate,jdbcType=TINYINT},
+      order_user_store_name = #{record.orderUserStoreName,jdbcType=VARCHAR},
+      order_receipt = #{record.orderReceipt,jdbcType=TIMESTAMP},
+      order_user_name = #{record.orderUserName,jdbcType=VARCHAR},
+      order_buy_message = #{record.orderBuyMessage,jdbcType=VARCHAR},
+      order_user_id = #{record.orderUserId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yoke.ego.common.pojo.Order">
+    update ego_order
+    <set>
+      <if test="orderMemo != null">
+        order_memo = #{orderMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="orderCount != null">
+        order_count = #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderPostFee != null">
+        order_post_fee = #{orderPostFee,jdbcType=REAL},
+      </if>
+      <if test="orderUnitPrice != null">
+        order_unit_price = #{orderUnitPrice,jdbcType=REAL},
+      </if>
+      <if test="orderPayment != null">
+        order_payment = #{orderPayment,jdbcType=REAL},
+      </if>
+      <if test="orderConsignTime != null">
+        order_consign_time = #{orderConsignTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdated != null">
+        order_updated = #{orderUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderCreated != null">
+        order_created = #{orderCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderPaymentType != null">
+        order_payment_type = #{orderPaymentType,jdbcType=INTEGER},
+      </if>
+      <if test="orderShoppingName != null">
+        order_shopping_name = #{orderShoppingName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderByerId != null">
+        order_byer_id = #{orderByerId,jdbcType=BIGINT},
+      </if>
+      <if test="orderShoppingCode != null">
+        order_shopping_code = #{orderShoppingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderBuyerRate != null">
+        order_buyer_rate = #{orderBuyerRate,jdbcType=TINYINT},
+      </if>
+      <if test="orderUserStoreName != null">
+        order_user_store_name = #{orderUserStoreName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderReceipt != null">
+        order_receipt = #{orderReceipt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUserName != null">
+        order_user_name = #{orderUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderBuyMessage != null">
+        order_buy_message = #{orderBuyMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="orderUserId != null">
+        order_user_id = #{orderUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yoke.ego.common.pojo.Order">
+    update ego_order
+    set order_memo = #{orderMemo,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=TINYINT},
+      order_count = #{orderCount,jdbcType=INTEGER},
+      order_post_fee = #{orderPostFee,jdbcType=REAL},
+      order_unit_price = #{orderUnitPrice,jdbcType=REAL},
+      order_payment = #{orderPayment,jdbcType=REAL},
+      order_consign_time = #{orderConsignTime,jdbcType=TIMESTAMP},
+      order_updated = #{orderUpdated,jdbcType=TIMESTAMP},
+      order_created = #{orderCreated,jdbcType=TIMESTAMP},
+      order_payment_type = #{orderPaymentType,jdbcType=INTEGER},
+      order_shopping_name = #{orderShoppingName,jdbcType=VARCHAR},
+      order_byer_id = #{orderByerId,jdbcType=BIGINT},
+      order_shopping_code = #{orderShoppingCode,jdbcType=VARCHAR},
+      order_buyer_rate = #{orderBuyerRate,jdbcType=TINYINT},
+      order_user_store_name = #{orderUserStoreName,jdbcType=VARCHAR},
+      order_receipt = #{orderReceipt,jdbcType=TIMESTAMP},
+      order_user_name = #{orderUserName,jdbcType=VARCHAR},
+      order_buy_message = #{orderBuyMessage,jdbcType=VARCHAR},
+      order_user_id = #{orderUserId,jdbcType=BIGINT}
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+</mapper>

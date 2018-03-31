@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yoke.ego.common.mapper.ShopcartMapper">
+  <resultMap id="BaseResultMap" type="com.yoke.ego.common.pojo.Shopcart">
+    <constructor>
+      <idArg column="shopcart_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="shopcart_user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="shopcart_created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="shopcart_updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="shopcart_memo" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="shopcart_item_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="shopcart_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="shopcart_status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    shopcart_id, shopcart_user_id, shopcart_created, shopcart_updated, shopcart_memo, 
+    shopcart_item_id, shopcart_count, shopcart_status
+  </sql>
+  <select id="selectByExample" parameterType="com.yoke.ego.common.pojo.ShopcartExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ego_shopcart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ego_shopcart
+    where shopcart_id = #{shopcartId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ego_shopcart
+    where shopcart_id = #{shopcartId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yoke.ego.common.pojo.ShopcartExample">
+    delete from ego_shopcart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yoke.ego.common.pojo.Shopcart">
+    <selectKey keyProperty="shopcartId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ego_shopcart (shopcart_user_id, shopcart_created, 
+      shopcart_updated, shopcart_memo, shopcart_item_id, 
+      shopcart_count, shopcart_status)
+    values (#{shopcartUserId,jdbcType=BIGINT}, #{shopcartCreated,jdbcType=TIMESTAMP}, 
+      #{shopcartUpdated,jdbcType=TIMESTAMP}, #{shopcartMemo,jdbcType=VARCHAR}, #{shopcartItemId,jdbcType=BIGINT}, 
+      #{shopcartCount,jdbcType=INTEGER}, #{shopcartStatus,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yoke.ego.common.pojo.Shopcart">
+    <selectKey keyProperty="shopcartId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ego_shopcart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopcartUserId != null">
+        shopcart_user_id,
+      </if>
+      <if test="shopcartCreated != null">
+        shopcart_created,
+      </if>
+      <if test="shopcartUpdated != null">
+        shopcart_updated,
+      </if>
+      <if test="shopcartMemo != null">
+        shopcart_memo,
+      </if>
+      <if test="shopcartItemId != null">
+        shopcart_item_id,
+      </if>
+      <if test="shopcartCount != null">
+        shopcart_count,
+      </if>
+      <if test="shopcartStatus != null">
+        shopcart_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopcartUserId != null">
+        #{shopcartUserId,jdbcType=BIGINT},
+      </if>
+      <if test="shopcartCreated != null">
+        #{shopcartCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopcartUpdated != null">
+        #{shopcartUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopcartMemo != null">
+        #{shopcartMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopcartItemId != null">
+        #{shopcartItemId,jdbcType=BIGINT},
+      </if>
+      <if test="shopcartCount != null">
+        #{shopcartCount,jdbcType=INTEGER},
+      </if>
+      <if test="shopcartStatus != null">
+        #{shopcartStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yoke.ego.common.pojo.ShopcartExample" resultType="java.lang.Long">
+    select count(*) from ego_shopcart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ego_shopcart
+    <set>
+      <if test="record.shopcartId != null">
+        shopcart_id = #{record.shopcartId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopcartUserId != null">
+        shopcart_user_id = #{record.shopcartUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopcartCreated != null">
+        shopcart_created = #{record.shopcartCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.shopcartUpdated != null">
+        shopcart_updated = #{record.shopcartUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.shopcartMemo != null">
+        shopcart_memo = #{record.shopcartMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopcartItemId != null">
+        shopcart_item_id = #{record.shopcartItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopcartCount != null">
+        shopcart_count = #{record.shopcartCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopcartStatus != null">
+        shopcart_status = #{record.shopcartStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ego_shopcart
+    set shopcart_id = #{record.shopcartId,jdbcType=BIGINT},
+      shopcart_user_id = #{record.shopcartUserId,jdbcType=BIGINT},
+      shopcart_created = #{record.shopcartCreated,jdbcType=TIMESTAMP},
+      shopcart_updated = #{record.shopcartUpdated,jdbcType=TIMESTAMP},
+      shopcart_memo = #{record.shopcartMemo,jdbcType=VARCHAR},
+      shopcart_item_id = #{record.shopcartItemId,jdbcType=BIGINT},
+      shopcart_count = #{record.shopcartCount,jdbcType=INTEGER},
+      shopcart_status = #{record.shopcartStatus,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yoke.ego.common.pojo.Shopcart">
+    update ego_shopcart
+    <set>
+      <if test="shopcartUserId != null">
+        shopcart_user_id = #{shopcartUserId,jdbcType=BIGINT},
+      </if>
+      <if test="shopcartCreated != null">
+        shopcart_created = #{shopcartCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopcartUpdated != null">
+        shopcart_updated = #{shopcartUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopcartMemo != null">
+        shopcart_memo = #{shopcartMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopcartItemId != null">
+        shopcart_item_id = #{shopcartItemId,jdbcType=BIGINT},
+      </if>
+      <if test="shopcartCount != null">
+        shopcart_count = #{shopcartCount,jdbcType=INTEGER},
+      </if>
+      <if test="shopcartStatus != null">
+        shopcart_status = #{shopcartStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where shopcart_id = #{shopcartId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yoke.ego.common.pojo.Shopcart">
+    update ego_shopcart
+    set shopcart_user_id = #{shopcartUserId,jdbcType=BIGINT},
+      shopcart_created = #{shopcartCreated,jdbcType=TIMESTAMP},
+      shopcart_updated = #{shopcartUpdated,jdbcType=TIMESTAMP},
+      shopcart_memo = #{shopcartMemo,jdbcType=VARCHAR},
+      shopcart_item_id = #{shopcartItemId,jdbcType=BIGINT},
+      shopcart_count = #{shopcartCount,jdbcType=INTEGER},
+      shopcart_status = #{shopcartStatus,jdbcType=TINYINT}
+    where shopcart_id = #{shopcartId,jdbcType=BIGINT}
+  </update>
+</mapper>

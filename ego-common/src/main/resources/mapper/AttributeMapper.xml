@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yoke.ego.common.mapper.AttributeMapper">
+  <resultMap id="BaseResultMap" type="com.yoke.ego.common.pojo.Attribute">
+    <constructor>
+      <idArg column="item_attribute_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="item_attribute_data" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="item_attribute_created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="item_attribute_updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="item_attribute_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="item_attribute_price" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="item_attribute_limit_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="item_attribute_item_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    item_attribute_id, item_attribute_data, item_attribute_created, item_attribute_updated, 
+    item_attribute_count, item_attribute_price, item_attribute_limit_num, item_attribute_item_id
+  </sql>
+  <select id="selectByExample" parameterType="com.yoke.ego.common.pojo.AttributeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ego_item_attribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ego_item_attribute
+    where item_attribute_id = #{itemAttributeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ego_item_attribute
+    where item_attribute_id = #{itemAttributeId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yoke.ego.common.pojo.AttributeExample">
+    delete from ego_item_attribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yoke.ego.common.pojo.Attribute">
+    <selectKey keyProperty="itemAttributeId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ego_item_attribute (item_attribute_data, item_attribute_created, 
+      item_attribute_updated, item_attribute_count, 
+      item_attribute_price, item_attribute_limit_num, 
+      item_attribute_item_id)
+    values (#{itemAttributeData,jdbcType=VARCHAR}, #{itemAttributeCreated,jdbcType=TIMESTAMP}, 
+      #{itemAttributeUpdated,jdbcType=TIMESTAMP}, #{itemAttributeCount,jdbcType=INTEGER}, 
+      #{itemAttributePrice,jdbcType=REAL}, #{itemAttributeLimitNum,jdbcType=INTEGER}, 
+      #{itemAttributeItemId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yoke.ego.common.pojo.Attribute">
+    <selectKey keyProperty="itemAttributeId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ego_item_attribute
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemAttributeData != null">
+        item_attribute_data,
+      </if>
+      <if test="itemAttributeCreated != null">
+        item_attribute_created,
+      </if>
+      <if test="itemAttributeUpdated != null">
+        item_attribute_updated,
+      </if>
+      <if test="itemAttributeCount != null">
+        item_attribute_count,
+      </if>
+      <if test="itemAttributePrice != null">
+        item_attribute_price,
+      </if>
+      <if test="itemAttributeLimitNum != null">
+        item_attribute_limit_num,
+      </if>
+      <if test="itemAttributeItemId != null">
+        item_attribute_item_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemAttributeData != null">
+        #{itemAttributeData,jdbcType=VARCHAR},
+      </if>
+      <if test="itemAttributeCreated != null">
+        #{itemAttributeCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemAttributeUpdated != null">
+        #{itemAttributeUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemAttributeCount != null">
+        #{itemAttributeCount,jdbcType=INTEGER},
+      </if>
+      <if test="itemAttributePrice != null">
+        #{itemAttributePrice,jdbcType=REAL},
+      </if>
+      <if test="itemAttributeLimitNum != null">
+        #{itemAttributeLimitNum,jdbcType=INTEGER},
+      </if>
+      <if test="itemAttributeItemId != null">
+        #{itemAttributeItemId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yoke.ego.common.pojo.AttributeExample" resultType="java.lang.Long">
+    select count(*) from ego_item_attribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ego_item_attribute
+    <set>
+      <if test="record.itemAttributeId != null">
+        item_attribute_id = #{record.itemAttributeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemAttributeData != null">
+        item_attribute_data = #{record.itemAttributeData,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemAttributeCreated != null">
+        item_attribute_created = #{record.itemAttributeCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemAttributeUpdated != null">
+        item_attribute_updated = #{record.itemAttributeUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemAttributeCount != null">
+        item_attribute_count = #{record.itemAttributeCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemAttributePrice != null">
+        item_attribute_price = #{record.itemAttributePrice,jdbcType=REAL},
+      </if>
+      <if test="record.itemAttributeLimitNum != null">
+        item_attribute_limit_num = #{record.itemAttributeLimitNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemAttributeItemId != null">
+        item_attribute_item_id = #{record.itemAttributeItemId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ego_item_attribute
+    set item_attribute_id = #{record.itemAttributeId,jdbcType=BIGINT},
+      item_attribute_data = #{record.itemAttributeData,jdbcType=VARCHAR},
+      item_attribute_created = #{record.itemAttributeCreated,jdbcType=TIMESTAMP},
+      item_attribute_updated = #{record.itemAttributeUpdated,jdbcType=TIMESTAMP},
+      item_attribute_count = #{record.itemAttributeCount,jdbcType=INTEGER},
+      item_attribute_price = #{record.itemAttributePrice,jdbcType=REAL},
+      item_attribute_limit_num = #{record.itemAttributeLimitNum,jdbcType=INTEGER},
+      item_attribute_item_id = #{record.itemAttributeItemId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yoke.ego.common.pojo.Attribute">
+    update ego_item_attribute
+    <set>
+      <if test="itemAttributeData != null">
+        item_attribute_data = #{itemAttributeData,jdbcType=VARCHAR},
+      </if>
+      <if test="itemAttributeCreated != null">
+        item_attribute_created = #{itemAttributeCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemAttributeUpdated != null">
+        item_attribute_updated = #{itemAttributeUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemAttributeCount != null">
+        item_attribute_count = #{itemAttributeCount,jdbcType=INTEGER},
+      </if>
+      <if test="itemAttributePrice != null">
+        item_attribute_price = #{itemAttributePrice,jdbcType=REAL},
+      </if>
+      <if test="itemAttributeLimitNum != null">
+        item_attribute_limit_num = #{itemAttributeLimitNum,jdbcType=INTEGER},
+      </if>
+      <if test="itemAttributeItemId != null">
+        item_attribute_item_id = #{itemAttributeItemId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where item_attribute_id = #{itemAttributeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yoke.ego.common.pojo.Attribute">
+    update ego_item_attribute
+    set item_attribute_data = #{itemAttributeData,jdbcType=VARCHAR},
+      item_attribute_created = #{itemAttributeCreated,jdbcType=TIMESTAMP},
+      item_attribute_updated = #{itemAttributeUpdated,jdbcType=TIMESTAMP},
+      item_attribute_count = #{itemAttributeCount,jdbcType=INTEGER},
+      item_attribute_price = #{itemAttributePrice,jdbcType=REAL},
+      item_attribute_limit_num = #{itemAttributeLimitNum,jdbcType=INTEGER},
+      item_attribute_item_id = #{itemAttributeItemId,jdbcType=BIGINT}
+    where item_attribute_id = #{itemAttributeId,jdbcType=BIGINT}
+  </update>
+</mapper>

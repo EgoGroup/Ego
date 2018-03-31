@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yoke.ego.common.mapper.ItemDescMapper">
+  <resultMap id="BaseResultMap" type="com.yoke.ego.common.pojo.ItemDesc">
+    <constructor>
+      <idArg column="item_desc_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="item_desc_created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="item_desc_updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="item_desc_item_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.yoke.ego.common.pojo.ItemDesc">
+    <constructor>
+      <idArg column="item_desc_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="item_desc_created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="item_desc_updated" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="item_desc_item_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="item_desc_text" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    item_desc_id, item_desc_created, item_desc_updated, item_desc_item_id
+  </sql>
+  <sql id="Blob_Column_List">
+    item_desc_text
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.yoke.ego.common.pojo.ItemDescExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ego_item_desc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.yoke.ego.common.pojo.ItemDescExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ego_item_desc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ego_item_desc
+    where item_desc_id = #{itemDescId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ego_item_desc
+    where item_desc_id = #{itemDescId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yoke.ego.common.pojo.ItemDescExample">
+    delete from ego_item_desc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yoke.ego.common.pojo.ItemDesc">
+    <selectKey keyProperty="itemDescId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ego_item_desc (item_desc_created, item_desc_updated, 
+      item_desc_item_id, item_desc_text)
+    values (#{itemDescCreated,jdbcType=TIMESTAMP}, #{itemDescUpdated,jdbcType=TIMESTAMP}, 
+      #{itemDescItemId,jdbcType=BIGINT}, #{itemDescText,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yoke.ego.common.pojo.ItemDesc">
+    <selectKey keyProperty="itemDescId" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ego_item_desc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemDescCreated != null">
+        item_desc_created,
+      </if>
+      <if test="itemDescUpdated != null">
+        item_desc_updated,
+      </if>
+      <if test="itemDescItemId != null">
+        item_desc_item_id,
+      </if>
+      <if test="itemDescText != null">
+        item_desc_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemDescCreated != null">
+        #{itemDescCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemDescUpdated != null">
+        #{itemDescUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemDescItemId != null">
+        #{itemDescItemId,jdbcType=BIGINT},
+      </if>
+      <if test="itemDescText != null">
+        #{itemDescText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yoke.ego.common.pojo.ItemDescExample" resultType="java.lang.Long">
+    select count(*) from ego_item_desc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ego_item_desc
+    <set>
+      <if test="record.itemDescId != null">
+        item_desc_id = #{record.itemDescId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemDescCreated != null">
+        item_desc_created = #{record.itemDescCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemDescUpdated != null">
+        item_desc_updated = #{record.itemDescUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.itemDescItemId != null">
+        item_desc_item_id = #{record.itemDescItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemDescText != null">
+        item_desc_text = #{record.itemDescText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update ego_item_desc
+    set item_desc_id = #{record.itemDescId,jdbcType=BIGINT},
+      item_desc_created = #{record.itemDescCreated,jdbcType=TIMESTAMP},
+      item_desc_updated = #{record.itemDescUpdated,jdbcType=TIMESTAMP},
+      item_desc_item_id = #{record.itemDescItemId,jdbcType=BIGINT},
+      item_desc_text = #{record.itemDescText,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ego_item_desc
+    set item_desc_id = #{record.itemDescId,jdbcType=BIGINT},
+      item_desc_created = #{record.itemDescCreated,jdbcType=TIMESTAMP},
+      item_desc_updated = #{record.itemDescUpdated,jdbcType=TIMESTAMP},
+      item_desc_item_id = #{record.itemDescItemId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yoke.ego.common.pojo.ItemDesc">
+    update ego_item_desc
+    <set>
+      <if test="itemDescCreated != null">
+        item_desc_created = #{itemDescCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemDescUpdated != null">
+        item_desc_updated = #{itemDescUpdated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemDescItemId != null">
+        item_desc_item_id = #{itemDescItemId,jdbcType=BIGINT},
+      </if>
+      <if test="itemDescText != null">
+        item_desc_text = #{itemDescText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where item_desc_id = #{itemDescId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yoke.ego.common.pojo.ItemDesc">
+    update ego_item_desc
+    set item_desc_created = #{itemDescCreated,jdbcType=TIMESTAMP},
+      item_desc_updated = #{itemDescUpdated,jdbcType=TIMESTAMP},
+      item_desc_item_id = #{itemDescItemId,jdbcType=BIGINT},
+      item_desc_text = #{itemDescText,jdbcType=LONGVARCHAR}
+    where item_desc_id = #{itemDescId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yoke.ego.common.pojo.ItemDesc">
+    update ego_item_desc
+    set item_desc_created = #{itemDescCreated,jdbcType=TIMESTAMP},
+      item_desc_updated = #{itemDescUpdated,jdbcType=TIMESTAMP},
+      item_desc_item_id = #{itemDescItemId,jdbcType=BIGINT}
+    where item_desc_id = #{itemDescId,jdbcType=BIGINT}
+  </update>
+</mapper>
