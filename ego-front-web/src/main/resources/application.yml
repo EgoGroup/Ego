@@ -35,3 +35,6 @@ ego:
   common:
     upload:
       imglocation: D:/upload/
+#    frontPage:
+#      host:   可配置
+

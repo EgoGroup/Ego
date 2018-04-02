@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Yoke on 2018/3/22
@@ -30,6 +31,7 @@ public class ItemServiceImpl extends BaseServiceImpl<ItemMapper, Item, ItemExamp
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Override
     public Map<String, Object> listAll(Long id) {
         Category c = null;
         try {
@@ -43,16 +45,16 @@ public class ItemServiceImpl extends BaseServiceImpl<ItemMapper, Item, ItemExamp
         categoryExample.or().andCategoryParentIdEqualTo(id);
         List<Category> categories = categoryMapper.selectByExample(categoryExample);
         ItemExample itemExample = new ItemExample();
-        List<Item> items = new ArrayList<Item>();
+        List<Item> items = new ArrayList<>();
         if (categories != null) {
-            // 查出子分类的所有商品
-            for (Category category : categories) {
+            List itemList = categories.stream().map(category -> {
                 itemExample.or().andItemCategoryIdEqualTo(category.getCategoryId());
-                List<Item> list = itemMapper.selectByExample(itemExample);
-                items.addAll(list);
-                itemExample.clear();
-            }
+                return itemMapper.selectByExample(itemExample);
+            }).collect(Collectors.toList());
+            LOGGER.info("list集合的内容{}" + itemList);
+            items.addAll(itemList);
         }
+        itemExample.clear();
         // 查出当前分类的所有商品
         itemExample.or().andItemCategoryIdEqualTo(id);
         items.addAll(itemMapper.selectByExample(itemExample));

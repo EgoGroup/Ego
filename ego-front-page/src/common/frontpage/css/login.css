@@ -1,0 +1,108 @@
+
+.header-system {
+    padding-top: 0;
+    font-size: 100%;
+    text-align: center;
+    vertical-align: baseline;
+}
+
+.header-system h1 {
+    font-size: 3em;
+    color: #00aeee;
+    letter-spacing: 4px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.main-content-agile {
+    margin: 7em 8em 3em;
+    font-size: 100%;
+    vertical-align: baseline;
+    text-align: center;
+}
+
+.sub-main {
+    position: relative;
+    width: 30%;
+    margin: 0 auto;
+    font-size: 100%;
+    vertical-align: baseline;
+    text-align: center;
+}
+
+.sub-main input[type="text"], .sub-main input[type="password"] {
+    outline: none;
+    font-size: 1em;
+    padding: 1em 3em 1em 1em;
+    margin-bottom: 0.3em;
+    background: none;
+    border: 1px solid #eee;
+    width: 90%;
+    color: #00aeee;
+    font-weight: 400;
+    font-family: "黑体", serif;
+    letter-spacing: 1px;
+    text-rendering: auto;
+    word-spacing: normal;
+    display: inline-block;
+    text-align: start;
+}
+
+.sub-main input[type="button"] {
+    color: #ffffff;
+    background: #00aeee;
+    padding: 8px;
+    text-align: center;
+    /*margin-right: 10px;*/
+    width: 38%;
+    font-size: 1.1em;
+    cursor: pointer;
+    letter-spacing: 2px;
+    font-weight: 400;
+    font-family: '黑体', serif;
+}
+
+.wthree-pro {
+
+}
+
+.wthree-pro h2 {
+    font-size: 1.5em;
+    color: #00aeee;
+    letter-spacing: 1px;
+    margin-top: 0.3em;
+    font-weight: 400;
+}
+
+span.icon1 {
+    top: 23%;
+    right: 5%;
+    color: #00aeee;
+    font-size: 1.1em;
+    position: absolute;
+    text-align: center;
+}
+
+.sub-w3 {
+    margin-top: 3em;
+}
+
+.sub-w3 h6 a {
+    font-size: 1em;
+    color: #00aeee;
+    letter-spacing: 2px;
+    text-align: center;
+    display: inherit;
+}
+
+.footer {
+    padding: 6em 3em;
+}
+
+.footer p {
+    padding: 70px;
+    text-align: center;
+    font-size: 1em;
+    color: #00aeee;
+    letter-spacing: 2px;
+}

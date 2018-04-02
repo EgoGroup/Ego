@@ -9,11 +9,7 @@ import com.yoke.ego.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -21,7 +17,7 @@ import java.util.List;
 /**
  * Created by Yoke on 2018/3/26
  */
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -29,13 +25,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    @ResponseBody
     public EgoResult<Object> login(@RequestBody UserDto userDto, HttpServletRequest request) {
         LOGGER.info(userDto.toString());
         EgoResult result = null;
         UserExample userExample = new UserExample();
         userExample.or().andUserNameEqualTo(userDto.getUsername());
         List<User> list = userService.selectByExample(userExample);
+
         if (list.size() == 0) {
             return new ResultUtil<>().setError("用户名不存在");
         }
@@ -46,5 +42,11 @@ public class UserController {
         } else {
             return new ResultUtil<>().setError("用户名密码不匹配");
         }
+    }
+
+    @GetMapping("/isLogin")
+    public EgoResult isLogin(HttpServletRequest servletRequest) {
+        Boolean isLogin = userService.isLogin(servletRequest);
+        return new ResultUtil<>().setData(isLogin);
     }
 }

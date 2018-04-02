@@ -10,17 +10,12 @@ import com.yoke.ego.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Yoke on 2018/3/28
  */
-@Controller
+@RestController
 @RequestMapping("/shopcart")
 public class ShopcartController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShopcartController.class);
@@ -31,7 +26,7 @@ public class ShopcartController {
     private ShopcartService shopcartService;
 
     @GetMapping("/list/{userId}")
-    public ModelAndView list(@PathVariable Long userId, ModelAndView modelAndView) {
+    public EgoResult list(@PathVariable Long userId) {
         if (userId == null) {
             throw new NullPointerException("查询用户购物车的id为空");
         }
@@ -42,13 +37,10 @@ public class ShopcartController {
         ShopcartExample shopcartExample = new ShopcartExample();
         shopcartExample.or().andShopcartUserIdEqualTo(userId);
         Shopcart shopcart = shopcartService.selectByExample(shopcartExample).get(0);
-
-        modelAndView.addObject("shopcart", shopcart);
-        return modelAndView;
+        return new ResultUtil<>().setData(shopcart);
     }
 
     @GetMapping("/cancle/{itemId}")
-    @ResponseBody
     public EgoResult<Object> cancle(@PathVariable Long itemId) {
         if (itemId == null) {
             throw new NullPointerException("所要取消的商品id为空");

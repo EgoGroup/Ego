@@ -1,4 +1,4 @@
-/*package com.yoke.ego.frontweb.handler;
+package com.yoke.ego.frontweb.handler;
 
 import com.yoke.ego.common.exception.EgoException;
 import com.yoke.ego.frontweb.common.EgoResult;
@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.net.BindException;
 
-*//**
- * Created by Yoke on 2018/3/27
- *//*
 @ControllerAdvice
 public class RestCtrlExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(RestCtrlExceptionHandler.class);
@@ -43,7 +40,7 @@ public class RestCtrlExceptionHandler {
         }
         return new ResultUtil<>().setError(errorMsg);
     }
-*//*
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
@@ -54,5 +51,5 @@ public class RestCtrlExceptionHandler {
             LOGGER.error(errorMsg);
         }
         return new ResultUtil<>().setError(errorMsg);
-    }*//*
-}*/
+    }
+}
