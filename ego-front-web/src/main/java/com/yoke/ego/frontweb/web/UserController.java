@@ -27,7 +27,6 @@ public class UserController {
     @PostMapping("/login")
     public EgoResult<Object> login(@RequestBody UserDto userDto, HttpServletRequest request) {
         LOGGER.info(userDto.toString());
-        EgoResult result = null;
         UserExample userExample = new UserExample();
         userExample.or().andUserNameEqualTo(userDto.getUsername());
         List<User> list = userService.selectByExample(userExample);
@@ -37,6 +36,7 @@ public class UserController {
         }
         User user = list.get(0);
         if (user.getUserPassword().equals(userDto.getPassword())) {
+            // 将当前用户添加到缓存里
             request.getSession().setAttribute("user", user);
             return new ResultUtil<>().setData(null);
         } else {
@@ -46,7 +46,7 @@ public class UserController {
 
     @GetMapping("/isLogin")
     public EgoResult isLogin(HttpServletRequest servletRequest) {
-        Boolean isLogin = userService.isLogin(servletRequest);
-        return new ResultUtil<>().setData(isLogin);
+        System.out.println(userService.isLogin(servletRequest));
+        return new ResultUtil<>().setData(userService.isLogin(servletRequest));
     }
 }

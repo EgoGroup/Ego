@@ -13,8 +13,8 @@ public interface UserService extends BaseService<User, UserExample> {
     /**
      * 判断当前用户是否登录
      *
-     * @return
+     * @return 返回当前登录的用户，如果没有登陆，则返回Null
      */
-    Boolean isLogin(HttpServletRequest servletRequest);
+    User isLogin(HttpServletRequest servletRequest);
 
 }

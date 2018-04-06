@@ -32,20 +32,24 @@
     name: "FrontMain",
     data() {
       return {
-        categoryWithItems: [],
+        categoryWithItems: []
       }
     },
     methods: {
       details(itemId) {
         window.location.href = 'http://localhost:8080/item/details/' + itemId;
+      },
+      init() {
+        getIndexInfo({}).then(res => {
+          this.categoryWithItems = res.data.data;
+          console.log(res.data.data);
+        })
       }
     },
     created() {
-      getIndexInfo({}).then((res) => {
-        this.categoryWithItems = res.data.data.categoryWithItems;
-        console.log(this.categoryWithItems[0])
-      })
+      this.init();
     }
+
   }
 </script>
 

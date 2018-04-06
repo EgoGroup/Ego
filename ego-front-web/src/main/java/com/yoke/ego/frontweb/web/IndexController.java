@@ -35,6 +35,7 @@ public class IndexController {
     public EgoResult<Object> index(HttpServletRequest servletRequest) {
         LOGGER.info("-------------------" + commonProperties.getFrontPage().getHost());
         List<CategoryWithItem> categoryWithItems = categoryService.indexCategory();
+        System.out.println(categoryWithItems.size());
         return new ResultUtil<>().setData(categoryWithItems);
     }
 

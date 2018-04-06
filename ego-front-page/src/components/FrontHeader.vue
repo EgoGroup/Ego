@@ -26,12 +26,11 @@
         <li class="navbar-header-right"><a class="navbar-header-right">我的E服务</a></li>
         <li class="navbar-header-right"><a class="navbar-header-right">购物车</a></li>
         <li>
-          <a href="/web/login.html" class="navbar-header-right" style="border:0px solid #00aeee;color: #00aeee;">Login
-            in</a>
+          <a href="http://localhost:8080/web/login.html" class="navbar-header-right"
+             style="border:0 solid #00aeee;color: #00aeee;">{{isLogin}}</a>
         </li>
-
         <li>
-          <a href="" class="navbar-header-right" style="border:0px solid #00aeee;color: #00aeee;"> Login up</a>
+          <a href="" class="navbar-header-right" style="border:0 solid #00aeee;color: #00aeee;"> Login up</a>
         </li>
       </ul>
     </div>
@@ -39,10 +38,26 @@
 </template>
 
 <script>
+  import {isLogin} from "../api/api";
+
   export default {
     name: "FrontHeader",
+    data() {
+      return {
+        isLogin: "Login in"
+      }
+    },
+    methods: {
+      init() {
+        isLogin({}).then(res => {
+          if (res.data.data != null) {
+            this.isLogin = res.data;
+          }
+        })
+      }
+    },
     created() {
-
+      this.init();
     }
   }
 </script>

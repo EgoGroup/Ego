@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Category, CategoryExample> implements CategoryService {
+
+
     @Autowired
     private CategoryMapper categoryMapper;
 
@@ -28,28 +30,27 @@ public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Categor
 
     @Override
     public List<CategoryWithItem> indexCategory() {
-        // 查出所有parentId=1的分类
+        // 查出所有parentId=0的分类
         CategoryExample categoryExample = new CategoryExample();
         categoryExample.or().andCategoryParentIdEqualTo(0L);
-        List<Category> categories = categoryMapper.selectByExample(categoryExample);
-
-        // 查出每个主页分类下商品categpry_id为主页分类id的商品
-        List<CategoryWithItem> categoryWithItems = new ArrayList<>();
         ItemExample itemExample = new ItemExample();
-       categories.stream().map(category -> {
-            itemExample.or().andItemCategoryIdEqualTo(category.getCategoryId());
-            List<Item> items = itemMapper.selectByExample(itemExample);
-            this.transferItems(items);
-            categoryWithItems.add(new CategoryWithItem(category, items));
-            return categoryWithItems;
-        }).collect(Collectors.toList());
+        List<CategoryWithItem> categoryWithItems = new ArrayList<>();
+        // 列出所有的主页的分类
+        categoryMapper.selectByExample(categoryExample).stream()
+                .map(category -> {
+                    itemExample.or().andItemCategoryIdEqualTo(category.getCategoryId());
+                    List<Item> itemList = itemMapper.selectByExample(itemExample);
+                    this.transferItems(itemList);
+                    categoryWithItems.add(new CategoryWithItem(category, itemList));
+                    itemExample.clear();
+                    return categoryWithItems;
+                }).collect(Collectors.toList());
         return categoryWithItems;
     }
 
     @Override
     public List<Item> transferItems(List<Item> items) {
-        items.stream()
+        return items.stream()
                 .peek(item -> item.setItemImage(commonProperties.getFrontPage().getHost() + item.getItemImage())).collect(Collectors.toList());
-        return items;
     }
 }

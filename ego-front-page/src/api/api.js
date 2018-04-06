@@ -9,3 +9,6 @@ export const getCateogryList = params => {
 export const getIndexInfo = params => {
   return axios.get(URL)
 };
+export const isLogin = params => {
+  return axios.get(URL + '/user/isLogin')
+};

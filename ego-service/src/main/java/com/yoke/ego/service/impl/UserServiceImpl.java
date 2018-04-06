@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User, UserExample> implements UserService {
 
 
-    public Boolean isLogin(HttpServletRequest servletRequest) {
-        User user = (User) servletRequest.getSession().getAttribute("user");
-        return user != null;
+    @Override
+    public User isLogin(HttpServletRequest servletRequest) {
+        return (User) servletRequest.getSession().getAttribute("user");
     }
 }
