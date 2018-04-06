@@ -17,7 +17,7 @@
             <p style="text-align: center"><a class="text-sub-a" href="#">learn more...</a></p>
           </div>
           <div style="text-align: center">
-            <h2><a href="#">获取更多</a></h2>
+            <h2><a>获取更多</a></h2>
           </div>
         </div>
       </div>
@@ -32,7 +32,8 @@
     name: "FrontMain",
     data() {
       return {
-        categoryWithItems: []
+        categoryWithItems: [],
+        moreUrl: "http:localhost:8080/item/list/"
       }
     },
     methods: {
@@ -49,7 +50,6 @@
     created() {
       this.init();
     }
-
   }
 </script>
 
